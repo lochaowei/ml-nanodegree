@@ -1,0 +1,5 @@
+__pycache__/
+.ipynb_checkpoints/
+titanic_data.csv
+visuals.py
+visuals.pyc
