@@ -11959,8 +11959,8 @@ Standard deviation of prices: $165171.13154429477
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ol>
-<li>RM(6) is worth more than RM(7)</li>
-<li>LSTAT(15) is worth less than LSTAT(20)</li>
+<li>RM(7) is worth more than RM(6)</li>
+<li>LSTAT(15) is worth more than LSTAT(20)</li>
 <li>PTRATIO(10) is worth more than PTRATIO(15)</li>
 </ol>
 
@@ -12113,7 +12113,7 @@ Standard deviation of prices: $165171.13154429477
 <p><strong>Answer:</strong></p>
 <ol>
 <li>Yes, the model is very successful.</li>
-<li>R2 score of 0.923 means the model has good prediction capability (&gt;90%) of target variable.</li>
+<li>R2 score of 0.923 means the model can capture 92.3% varience in true value by prediction value.</li>
 </ol>
 
 </div>
@@ -13795,7 +13795,7 @@ RALj/wPMoiFvIh7WJAAAAABJRU5ErkJggg==
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ol>
-<li>It's high bias (underfitting) for max_depth=1.</li>
+<li>It's high bias (underfitting) for max_depth=1.  The training score (0.4) and validation score(0.3) are both low.</li>
 <li>It's high variance (overfitting) for max_depth=10. The training score (nearing 1) is too perfect, but the validation score is much lower than the training score.</li>
 </ol>
 
@@ -13884,8 +13884,8 @@ For question 5 and 6, the model has only one hyper parameter called maximum dept
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ol>
-<li>We can not train and test the model by the same dataset, so we need a method to split the dataset to train and test data. K-fold means it will split the dataset into k folds, one part for testing, other (k-1) parts for training and the selection  process will run k times, then each part in the k parts could be used to validate the model.</li>
-<li>If we are always using the same dataset as train or test data in grid search, the model might be easier to become overfitting . With k-fold cross-validation training technique, we can prevent the variance issue and generate the model with better capability for yet-unseen data.</li>
+<li>We can not train and test the model by the same dataset, so we need a method to split the dataset to train and validation data. K-fold means it will split the dataset into k folds, one part for validation, other (k-1) parts for training and the selection  process will run k times, then each part in the k parts could be used to validate the model. Finally , we got k validation error results, averaged the results to get the final single validation score.</li>
+<li>If we are always using the same dataset as train or validation data in grid search, the model might be easier to become overfitting if we luckily choosed the best fit sub dataset as train/validation data . With k-fold cross-validation training technique, we can preventing the selection issue and generating the model with better capability for yet-unseen data.</li>
 </ol>
 
 </div>
@@ -14079,17 +14079,23 @@ For question 5 and 6, the model has only one hyper parameter called maximum dept
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Produce a matrix for client data</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Produce a matrix for client data</span>
 <span class="n">client_data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span> <span class="c1"># Client 1</span>
                <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span> <span class="c1"># Client 2</span>
                <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">]]</span>  <span class="c1"># Client 3</span>
 
+
 <span class="c1"># Show predictions</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">price</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">client_data</span><span class="p">)):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predicted selling price for Client </span><span class="si">{}</span><span class="s2">&#39;s home: $</span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">price</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">price</span><span class="o">-</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;Client &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -14113,6 +14119,118 @@ Predicted selling price for Client 3&#39;s home: $927,500.00
 </div>
 </div>
 
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+JP4fAfGnhDqAYEoAAAAASUVORK5CYII=
+"
+>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -14126,12 +14244,46 @@ Predicted selling price for Client 3&#39;s home: $927,500.00
 <li>Predicted selling price for Client 1's home: \$419,700.00.   
 Predicted selling price for Client 2's home: \$287,100.00.<br>
 Predicted selling price for Client 3's home: \$927,500.00.  </li>
-<li>Yes, considered the ranking of 3 features[rooms, Neighborhood, Student-teacher],<br>
-client 1 (2,2,2)<br>
-client 2 (1,1,1)<br>
-client 3 (3,3,3)<br>
-, so the predicted selling price is reasonable : client 3 &gt; client1 &gt; client2. </li>
+<li>Yes, considered the ranking of 3 features[rooms, Neighborhood, Student-teacher],   </li>
 </ol>
+<table>
+<thead><tr>
+<th>cleint</th>
+<th>feature ranking <BR/>[rooms, Neighborhood, Student-teacher]</th>
+<th>min(\$105000)</th>
+<th>max (\$1024800)</th>
+<th>mean (\$454342)</th>
+<th>median (\$438900)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client 1 (\$419,700)</td>
+<td>2(5,17,15)</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>client 2 (\$287,100)</td>
+<td>3(4,32,22)</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>client 3 (\$927,500)</td>
+<td>1(8,3,12)</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+</tbody>
+</table>
+<p>, so the predicted selling price is reasonable : client 3 &gt; client1 &gt; client2.</p>
 
 </div>
 </div>
