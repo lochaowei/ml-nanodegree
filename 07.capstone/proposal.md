@@ -19,6 +19,13 @@ In the capstone project, I am trying to find the most significant features that 
 
 I used the dataset provided by Stack Overflow [2]. This survey included many different topics such as basic information, work, education, career, technology, culture and etc. So there are total 129 columns. Here I am focus on "OpenSource" topic. So I will use the "OpenSource" as the output value. The other 128 columns would become the input values. The dataset has provided the detail schema for all columns, I listed the detail as below.
 
+The dataset has total 98857 records. For the output "OpenSource" column, thres is no missing value. And the data distribution of the "OpenSource" column is:
+
+    Yes: 43087 (43.59%)
+    No: 55770 (56.41%)
+
+Although it's not perfect balanced data (50%-50%), we can still treat this distribution as some kind of balanced data.
+
 #### Input
 
 * Respondent: Randomized respondent ID number
@@ -131,7 +138,7 @@ For classification problem, confusion matrix is a specific table layout that all
 | Actual Positive | (TP) <BR>True Positive |(FN)<BR> False Negative|
 | Actual Negative | (FP)<BR> False Positive|(TN)<BR> True Negative |
 
-Here we select the "Accuracy" and "F1 score" as the classification threshold metrics [6].
+Since the data distribution of "OepnSource" is similar to balanced data, here we select the "Accuracy" and "F1 score" as the classification threshold metrics [6].
 
 * Accuracy: Accuracy measures how often the classifier makes the correct prediction. It’s the ratio of the number of correct predictions to the total number of predictions (the number of test data points). The formula is :
 
